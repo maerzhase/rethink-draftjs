@@ -1,4 +1,4 @@
-exports.handleError = res => (error) => {
-  console.log(error.message);
-  return res.send(500, { error: error.message });
+exports.handleError = (res, error) => {
+  console.error('error', error);
+  return res.status(500).send(error);
 };

@@ -3,15 +3,16 @@ import thinky from '../db';
 
 const Page = thinky.createModel('Page', {
   id: thinky.type.string(),
-  title: thinky.type.string(),
+  // title: thinky.type.string(),
   type: thinky.type.string(),
+  title: thinky.type.virtual().default(function () {
+    return (this.values && this.values.find(v => v.key === 'title'))
+      ? this.values.find(v => v.key === 'title').value
+      : 'No title found';
+  }),
 });
 
 module.exports = Page;
 
-const Block = require('./Block');
-const Entity = require('./Entity');
-
-Page.hasMany(Block, 'blocks', 'id', 'pageId');
-Page.hasMany(Entity, 'entities', 'id', 'pageId');
-
+// const Value = require('./Value');
+// Page.hasMany(Value, 'values', 'id', 'pageId');
